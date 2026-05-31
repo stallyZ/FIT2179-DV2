@@ -1,0 +1,33 @@
+date,year,month,month_name,day_of_week,day_type,mode,pax_daily
+2026-01,2026,1,Jan,Friday,Normal Weekday,Metro bus,334300
+2026-01,2026,1,Jan,Friday,Normal Weekday,Metro train,515350
+2026-01,2026,1,Jan,Friday,Normal Weekday,Regional bus,31550
+2026-01,2026,1,Jan,Friday,Normal Weekday,Regional train,54350
+2026-01,2026,1,Jan,Friday,School Holiday Weekday,Metro bus,246150
+2026-01,2026,1,Jan,Friday,School Holiday Weekday,Metro train,382300
+2026-01,2026,1,Jan,Friday,School Holiday Weekday,Regional bus,24350
+2026-01,2026,1,Jan,Friday,School Holiday Weekday,Regional train,33300
+2026-01,2026,1,Jan,Monday,School Holiday Weekday,Metro bus,284700
+2026-01,2026,1,Jan,Monday,School Holiday Weekday,Metro train,459250
+2026-01,2026,1,Jan,Monday,School Holiday Weekday,Regional bus,27000
+2026-01,2026,1,Jan,Monday,School Holiday Weekday,Regional train,34550
+2026-01,2026,1,Jan,Thursday,Normal Weekday,Metro bus,355600
+2026-01,2026,1,Jan,Thursday,Normal Weekday,Metro train,598050
+2026-01,2026,1,Jan,Thursday,Normal Weekday,Regional bus,34300
+2026-01,2026,1,Jan,Thursday,Normal Weekday,Regional train,62550
+2026-01,2026,1,Jan,Thursday,School Holiday Weekday,Metro bus,303700
+2026-01,2026,1,Jan,Thursday,School Holiday Weekday,Metro train,521600
+2026-01,2026,1,Jan,Thursday,School Holiday Weekday,Regional bus,27000
+2026-01,2026,1,Jan,Thursday,School Holiday Weekday,Regional train,38350
+2026-01,2026,1,Jan,Tuesday,School Holiday Weekday,Metro bus,283150
+2026-01,2026,1,Jan,Tuesday,School Holiday Weekday,Metro train,486200
+2026-01,2026,1,Jan,Tuesday,School Holiday Weekday,Regional bus,26000
+2026-01,2026,1,Jan,Tuesday,School Holiday Weekday,Regional train,36950
+2026-01,2026,1,Jan,Wednesday,Normal Weekday,Metro bus,347850
+2026-01,2026,1,Jan,Wednesday,Normal Weekday,Metro train,582750
+2026-01,2026,1,Jan,Wednesday,Normal Weekday,Regional bus,31200
+2026-01,2026,1,Jan,Wednesday,Normal Weekday,Regional train,60350
+2026-01,2026,1,Jan,Wednesday,School Holiday Weekday,Metro bus,278950
+2026-01,2026,1,Jan,Wednesday,School Holiday Weekday,Metro train,480350
+2026-01,2026,1,Jan,Wednesday,School Holiday Weekday,Regional bus,25000
+2026-01,2026,1,Jan,Wednesday,School Holiday Weekday,Regional train,34900

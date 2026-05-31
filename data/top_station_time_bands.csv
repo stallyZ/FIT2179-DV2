@@ -1,0 +1,49 @@
+station,time_band,entries
+Flinders Street,AM peak,3600
+Flinders Street,Interpeak,12600
+Flinders Street,PM peak,33650
+Flinders Street,PM late,10900
+Southern Cross,AM peak,3100
+Southern Cross,Interpeak,9300
+Southern Cross,PM peak,30800
+Southern Cross,PM late,5500
+Melbourne Central,AM peak,1650
+Melbourne Central,Interpeak,9500
+Melbourne Central,PM peak,21750
+Melbourne Central,PM late,6550
+Parliament,AM peak,850
+Parliament,Interpeak,3950
+Parliament,PM peak,16000
+Parliament,PM late,2600
+Footscray,AM peak,3850
+Footscray,Interpeak,4050
+Footscray,PM peak,4750
+Footscray,PM late,1000
+Richmond,AM peak,900
+Richmond,Interpeak,1350
+Richmond,PM peak,4400
+Richmond,PM late,2800
+Flagstaff,AM peak,850
+Flagstaff,Interpeak,2550
+Flagstaff,PM peak,8450
+Flagstaff,PM late,1150
+Caulfield,AM peak,2350
+Caulfield,Interpeak,2500
+Caulfield,PM peak,3600
+Caulfield,PM late,1200
+South Yarra,AM peak,2600
+South Yarra,Interpeak,2500
+South Yarra,PM peak,4600
+South Yarra,PM late,950
+Box Hill,AM peak,2600
+Box Hill,Interpeak,2400
+Box Hill,PM peak,2750
+Box Hill,PM late,500
+Glenferrie,AM peak,1050
+Glenferrie,Interpeak,2000
+Glenferrie,PM peak,3450
+Glenferrie,PM late,650
+Dandenong,AM peak,1350
+Dandenong,Interpeak,1700
+Dandenong,PM peak,2400
+Dandenong,PM late,600

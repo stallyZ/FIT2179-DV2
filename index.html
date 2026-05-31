@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free Fares, Full Platforms?</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="kicker">Victoria public transport · 2024-2026</div>
+      <h1>Free Fares, Full Platforms?</h1>
+      <p class="lede">Victoria made trains, trams and buses free from 31 March to 31 May 2026. Instead of claiming results that are not yet fully available in open data, this visualisation looks at the recent baseline: which services were already carrying the most demand before the fare-free period?</p>
+      <p class="note">This project uses recent Victorian Government public transport data. The 2026 free-fare period is used as background, but I do not use it as a final measured result because the open data is not fully available yet. I mainly want to show which services and stations were already busy, so viewers can understand where extra passengers may be noticed first. Readable Vega-Lite chart descriptions are available in <a href="specs/charts.json">specs/charts.json</a>.</p>
+      <div class="stats">
+        <div class="stat"><strong>2026-01</strong><span>latest monthly patronage table month</span></div>
+        <div class="stat"><strong>222</strong><span>metro train stations mapped</span></div>
+        <div class="stat"><strong>178.5m</strong><span>FY2024-25 metro station entries</span></div>
+        <div class="stat"><strong>31 Mar-31 May</strong><span>official free-fare period</span></div>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-copy">
+        <h2>The fare change is recent; the pressure was already uneven.</h2>
+        <p>Free travel is simple as a policy message, but demand is not evenly spread across modes or days. These charts use the latest open patronage records as a baseline. This is helpful because the free-fare period is quite recent, so I should not guess its final impact without enough data.</p>
+      </div>
+      <div class="grid">
+        <div class="chart-block wide">
+          <h3>1. Recent daily patronage by mode</h3>
+          <div id="chart-trend" class="chart"></div>
+          <p class="caption">Metro trains and trams dominate the passenger baseline, while regional services operate at a smaller scale but may still feel large changes locally.</p>
+          <p class="source">Source: Monthly average patronage by day type and by mode, Victorian Government Data Directory.</p>
+        </div>
+        <div class="chart-block">
+          <h3>2. 2025 demand by mode and day type</h3>
+          <div id="chart-daytype" class="chart small"></div>
+          <p class="caption">Normal weekdays carry the strongest routine demand, while weekends and school-holiday weekdays reveal more discretionary travel patterns.</p>
+          <p class="source">Average of daily patronage records across 2025.</p>
+        </div>
+        <div class="chart-block">
+          <h3>3. Latest open month profile</h3>
+          <div id="chart-latest-heat" class="chart small"></div>
+          <p class="caption">January 2026 is the latest month in this open table, giving the most recent available snapshot before the free-fare period.</p>
+          <p class="source">Latest available month in the open data: January 2026.</p>
+        </div>
+        <div class="chart-block">
+          <h3>4. Weekday pressure ranking</h3>
+          <div id="chart-weekday-rank" class="chart small"></div>
+          <p class="caption">A simple ranking makes clear which modes would face the greatest absolute pressure if more people shifted onto public transport.</p>
+          <p class="source">Normal weekday daily patronage, averaged across 2025 records.</p>
+        </div>
+        <div class="chart-block">
+          <h3>5. Weekend compared with normal weekdays</h3>
+          <div id="chart-weekend-gap" class="chart small"></div>
+          <p class="caption">This ratio helps separate commuter-heavy services from modes where weekend demand is closer to weekday demand.</p>
+          <p class="source">A smaller weekend gap suggests demand may be more leisure or event sensitive.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-copy">
+        <h2>The map points to concentrated rail demand.</h2>
+        <p>Station-level entries show where the rail network already concentrates passengers. Free fares may be statewide, but the practical experience of crowding is likely to be felt first at major interchange and CBD stations.</p>
+      </div>
+      <div class="grid">
+        <div class="chart-block wide">
+          <h3>6. Metropolitan train stations by annual entries</h3>
+          <div id="chart-map" class="chart"></div>
+          <p class="caption">The map shows that rail demand is not spread evenly across Melbourne; a small number of central and interchange stations carry much larger volumes.</p>
+          <p class="source">Source: Annual metropolitan train station patronage, FY2024-25. Circle size uses annual station entries.</p>
+        </div>
+        <div class="chart-block">
+          <h3>7. Busiest train stations</h3>
+          <div id="chart-top-stations" class="chart"></div>
+          <p class="caption">The busiest stations are mostly CBD or interchange locations, which makes them important pressure points during fare changes.</p>
+          <p class="source">Top 20 stations by annual entries.</p>
+        </div>
+        <div class="chart-block">
+          <h3>8. Peak-period shape at major stations</h3>
+          <div id="chart-timeband" class="chart"></div>
+          <p class="caption">Different stations have different daily rhythms, so extra demand would not necessarily arrive at the same time everywhere.</p>
+          <p class="source">Top 12 stations, entries by time band.</p>
+        </div>
+        <div class="chart-block">
+          <h3>9. Weekday versus weekend station use</h3>
+          <div id="chart-station-scatter" class="chart small"></div>
+          <p class="caption">Most stations with high weekday use also have higher Saturday use, but the relationship is uneven across the network.</p>
+          <p class="source">Each dot is a metropolitan train station.</p>
+        </div>
+        <div class="chart-block">
+          <h3>10. Weekend reliance among busy stations</h3>
+          <div id="chart-weekend-share" class="chart small"></div>
+          <p class="caption">Weekend intensity highlights busy stations where non-commute travel already matters, a useful clue for fare-free travel effects.</p>
+          <p class="source">Saturday plus Sunday compared with weekday entries.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Visualisation by Yuxin Zhang, Student ID 36080810, FIT2179 Data Visualisation 2, May 2026.</p>
+    </footer>
+  </main>
+
+  <script>
+    const colors = ["#2364aa", "#1f8a70", "#d76735", "#8f4aa8", "#5c6f7b"];
+    const baseConfig = {
+      background: "transparent",
+      autosize: {type: "fit", contains: "padding"},
+      config: {
+        view: {stroke: null},
+        axis: {labelColor: "#4c535a", titleColor: "#202124", gridColor: "#eceff3"},
+        legend: {labelColor: "#4c535a", titleColor: "#202124"},
+        title: {fontSize: 14, anchor: "start"}
+      }
+    };
+
+    function spec(s) {
+      return Object.assign({}, baseConfig, s);
+    }
+
+    function embed(id, s) {
+      vegaEmbed(id, spec(s), {actions: false, renderer: "svg"});
+    }
+
+    const modeOrder = ["Metro train", "Tram", "Metro bus", "Regional train", "Regional bus"];
+
+    embed("#chart-trend", {
+      width: "container",
+      height: 330,
+      data: {url: "data/monthly_mode_average.csv"},
+      mark: {type: "line", point: false, strokeWidth: 2.5},
+      encoding: {
+        x: {field: "date", type: "temporal", title: null},
+        y: {field: "avg_daily_pax", type: "quantitative", title: "Average daily passengers", axis: {format: "~s"}},
+        color: {field: "mode", type: "nominal", scale: {domain: modeOrder, range: colors}, title: "Mode"},
+        tooltip: [
+          {field: "date", type: "temporal", title: "Month"},
+          {field: "mode", type: "nominal", title: "Mode"},
+          {field: "avg_daily_pax", type: "quantitative", title: "Avg daily passengers", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-daytype", {
+      width: "container",
+      height: 245,
+      data: {url: "data/mode_daytype_2025.csv"},
+      mark: {type: "bar", cornerRadiusEnd: 2},
+      encoding: {
+        x: {field: "mode", type: "nominal", sort: modeOrder, title: null, axis: {labelAngle: -25}},
+        y: {field: "avg_daily_pax", type: "quantitative", title: "Average daily passengers", axis: {format: "~s"}},
+        color: {field: "day_type", type: "nominal", title: "Day type", scale: {range: ["#2364aa", "#d76735", "#1f8a70"]}},
+        xOffset: {field: "day_type"},
+        tooltip: [
+          {field: "mode", type: "nominal"},
+          {field: "day_type", type: "nominal"},
+          {field: "avg_daily_pax", type: "quantitative", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-latest-heat", {
+      width: "container",
+      height: 245,
+      data: {url: "data/latest_month_detail.csv"},
+      transform: [
+        {aggregate: [{op: "mean", field: "pax_daily", as: "avg_daily_pax"}], groupby: ["mode", "day_type"]}
+      ],
+      mark: {type: "rect"},
+      encoding: {
+        x: {field: "day_type", type: "nominal", title: null},
+        y: {field: "mode", type: "nominal", sort: modeOrder, title: null},
+        color: {field: "avg_daily_pax", type: "quantitative", title: "Passengers", scale: {scheme: "blues"}},
+        tooltip: [
+          {field: "mode", type: "nominal"},
+          {field: "day_type", type: "nominal"},
+          {field: "avg_daily_pax", type: "quantitative", title: "Avg daily passengers", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-weekday-rank", {
+      width: "container",
+      height: 245,
+      data: {url: "data/mode_daytype_2025.csv"},
+      transform: [{filter: "datum.day_type == 'Normal Weekday'"}],
+      mark: {type: "bar", cornerRadiusEnd: 3, color: "#2364aa"},
+      encoding: {
+        y: {field: "mode", type: "nominal", sort: "-x", title: null},
+        x: {field: "avg_daily_pax", type: "quantitative", title: "Average daily passengers", axis: {format: "~s"}},
+        tooltip: [
+          {field: "mode", type: "nominal"},
+          {field: "avg_daily_pax", type: "quantitative", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-weekend-gap", {
+      width: "container",
+      height: 245,
+      data: {url: "data/mode_daytype_2025.csv"},
+      transform: [
+        {pivot: "day_type", value: "avg_daily_pax", groupby: ["mode"]},
+        {calculate: "datum.Weekend / datum['Normal Weekday']", as: "weekend_ratio"}
+      ],
+      mark: {type: "bar", cornerRadiusEnd: 3, color: "#1f8a70"},
+      encoding: {
+        y: {field: "mode", type: "nominal", sort: "-x", title: null},
+        x: {field: "weekend_ratio", type: "quantitative", title: "Weekend / normal weekday", axis: {format: ".0%"}},
+        tooltip: [
+          {field: "mode", type: "nominal"},
+          {field: "weekend_ratio", type: "quantitative", format: ".1%"}
+        ]
+      }
+    });
+
+    embed("#chart-map", {
+      width: "container",
+      height: 430,
+      data: {url: "data/metro_station_patronage_2024_25.csv"},
+      projection: {type: "mercator", center: [145.05, -37.9], scale: 16500},
+      mark: {type: "circle", opacity: 0.72, stroke: "white", strokeWidth: 0.6},
+      encoding: {
+        longitude: {field: "lon", type: "quantitative"},
+        latitude: {field: "lat", type: "quantitative"},
+        size: {field: "annual_entries", type: "quantitative", scale: {range: [10, 1800]}, legend: {title: "Annual entries"}},
+        color: {field: "annual_entries", type: "quantitative", scale: {scheme: "tealblues"}, legend: {title: "Annual entries"}},
+        tooltip: [
+          {field: "station", type: "nominal", title: "Station"},
+          {field: "annual_entries", type: "quantitative", title: "Annual entries", format: ","},
+          {field: "weekday", type: "quantitative", title: "Weekday entries", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-top-stations", {
+      width: "container",
+      height: 360,
+      data: {url: "data/top_20_train_stations_2024_25.csv"},
+      mark: {type: "bar", cornerRadiusEnd: 3, color: "#2364aa"},
+      encoding: {
+        y: {field: "station", type: "nominal", sort: "-x", title: null},
+        x: {field: "annual_entries", type: "quantitative", title: "Annual entries", axis: {format: "~s"}},
+        tooltip: [
+          {field: "station", type: "nominal"},
+          {field: "annual_entries", type: "quantitative", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-timeband", {
+      width: "container",
+      height: 360,
+      data: {url: "data/top_station_time_bands.csv"},
+      mark: {type: "bar"},
+      encoding: {
+        y: {field: "station", type: "nominal", sort: "-x", title: null},
+        x: {field: "entries", type: "quantitative", title: "Average entries", stack: "normalize", axis: {format: ".0%"}},
+        color: {field: "time_band", type: "nominal", title: "Time band", scale: {range: ["#8f4aa8", "#1f8a70", "#d76735", "#5c6f7b"]}},
+        tooltip: [
+          {field: "station", type: "nominal"},
+          {field: "time_band", type: "nominal"},
+          {field: "entries", type: "quantitative", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-station-scatter", {
+      width: "container",
+      height: 245,
+      data: {url: "data/metro_station_patronage_2024_25.csv"},
+      mark: {type: "circle", opacity: 0.62, color: "#8f4aa8"},
+      encoding: {
+        x: {field: "weekday", type: "quantitative", title: "Average weekday entries", axis: {format: "~s"}},
+        y: {field: "saturday", type: "quantitative", title: "Average Saturday entries", axis: {format: "~s"}},
+        size: {field: "annual_entries", type: "quantitative", legend: null, scale: {range: [20, 900]}},
+        tooltip: [
+          {field: "station", type: "nominal"},
+          {field: "weekday", type: "quantitative", format: ","},
+          {field: "saturday", type: "quantitative", format: ","},
+          {field: "annual_entries", type: "quantitative", format: ","}
+        ]
+      }
+    });
+
+    embed("#chart-weekend-share", {
+      width: "container",
+      height: 245,
+      data: {url: "data/top_20_train_stations_2024_25.csv"},
+      transform: [
+        {calculate: "(datum.saturday + datum.sunday) / (datum.weekday * 2)", as: "weekend_share"}
+      ],
+      mark: {type: "bar", cornerRadiusEnd: 3, color: "#d76735"},
+      encoding: {
+        y: {field: "station", type: "nominal", sort: "-x", title: null},
+        x: {field: "weekend_share", type: "quantitative", title: "Weekend intensity", axis: {format: ".0%"}},
+        tooltip: [
+          {field: "station", type: "nominal"},
+          {field: "weekend_share", type: "quantitative", format: ".1%"},
+          {field: "saturday", type: "quantitative", format: ","},
+          {field: "sunday", type: "quantitative", format: ","}
+        ]
+      }
+    });
+  </script>
+</body>
+</html>

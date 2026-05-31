@@ -1,0 +1,16 @@
+mode,day_type,avg_daily_pax
+Metro bus,Normal Weekday,385508
+Metro bus,School Holiday Weekday,333012
+Metro bus,Weekend,166405
+Metro train,Normal Weekday,586487
+Metro train,School Holiday Weekday,503234
+Metro train,Weekend,288861
+Regional bus,Normal Weekday,34060
+Regional bus,School Holiday Weekday,28546
+Regional bus,Weekend,12795
+Regional train,Normal Weekday,62919
+Regional train,School Holiday Weekday,61924
+Regional train,Weekend,35930
+Tram,Normal Weekday,461519
+Tram,School Holiday Weekday,435268
+Tram,Weekend,355275

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "chart-trend",
+    "title": "Recent daily patronage by mode",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 330,
+      "data": {"url": "../data/monthly_mode_average.csv"},
+      "mark": {"type": "line", "strokeWidth": 2.5},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal", "title": null},
+        "y": {"field": "avg_daily_pax", "type": "quantitative", "title": "Average daily passengers", "axis": {"format": "~s"}},
+        "color": {"field": "mode", "type": "nominal", "title": "Mode"},
+        "tooltip": [
+          {"field": "date", "type": "temporal", "title": "Month"},
+          {"field": "mode", "type": "nominal"},
+          {"field": "avg_daily_pax", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-daytype",
+    "title": "2025 demand by mode and day type",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/mode_daytype_2025.csv"},
+      "mark": {"type": "bar", "cornerRadiusEnd": 2},
+      "encoding": {
+        "x": {"field": "mode", "type": "nominal", "title": null},
+        "y": {"field": "avg_daily_pax", "type": "quantitative", "title": "Average daily passengers", "axis": {"format": "~s"}},
+        "color": {"field": "day_type", "type": "nominal", "title": "Day type"},
+        "xOffset": {"field": "day_type"},
+        "tooltip": [
+          {"field": "mode", "type": "nominal"},
+          {"field": "day_type", "type": "nominal"},
+          {"field": "avg_daily_pax", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-latest-heat",
+    "title": "Latest open month profile",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/latest_month_detail.csv"},
+      "transform": [
+        {"aggregate": [{"op": "mean", "field": "pax_daily", "as": "avg_daily_pax"}], "groupby": ["mode", "day_type"]}
+      ],
+      "mark": {"type": "rect"},
+      "encoding": {
+        "x": {"field": "day_type", "type": "nominal", "title": null},
+        "y": {"field": "mode", "type": "nominal", "title": null},
+        "color": {"field": "avg_daily_pax", "type": "quantitative", "title": "Passengers", "scale": {"scheme": "blues"}},
+        "tooltip": [
+          {"field": "mode", "type": "nominal"},
+          {"field": "day_type", "type": "nominal"},
+          {"field": "avg_daily_pax", "type": "quantitative", "title": "Avg daily passengers", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-weekday-rank",
+    "title": "Weekday pressure ranking",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/mode_daytype_2025.csv"},
+      "transform": [{"filter": "datum.day_type == 'Normal Weekday'"}],
+      "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#2364aa"},
+      "encoding": {
+        "y": {"field": "mode", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "avg_daily_pax", "type": "quantitative", "title": "Average daily passengers", "axis": {"format": "~s"}},
+        "tooltip": [
+          {"field": "mode", "type": "nominal"},
+          {"field": "avg_daily_pax", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-weekend-gap",
+    "title": "Weekend compared with normal weekdays",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/mode_daytype_2025.csv"},
+      "transform": [
+        {"pivot": "day_type", "value": "avg_daily_pax", "groupby": ["mode"]},
+        {"calculate": "datum.Weekend / datum['Normal Weekday']", "as": "weekend_ratio"}
+      ],
+      "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#1f8a70"},
+      "encoding": {
+        "y": {"field": "mode", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "weekend_ratio", "type": "quantitative", "title": "Weekend / normal weekday", "axis": {"format": ".0%"}},
+        "tooltip": [
+          {"field": "mode", "type": "nominal"},
+          {"field": "weekend_ratio", "type": "quantitative", "format": ".1%"}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-map",
+    "title": "Metropolitan train stations by annual entries",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 430,
+      "data": {"url": "../data/metro_station_patronage_2024_25.csv"},
+      "projection": {"type": "mercator", "center": [145.05, -37.9], "scale": 16500},
+      "mark": {"type": "circle", "opacity": 0.72, "stroke": "white", "strokeWidth": 0.6},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {"field": "annual_entries", "type": "quantitative", "scale": {"range": [10, 1800]}, "legend": {"title": "Annual entries"}},
+        "color": {"field": "annual_entries", "type": "quantitative", "scale": {"scheme": "tealblues"}, "legend": {"title": "Annual entries"}},
+        "tooltip": [
+          {"field": "station", "type": "nominal", "title": "Station"},
+          {"field": "annual_entries", "type": "quantitative", "title": "Annual entries", "format": ","},
+          {"field": "weekday", "type": "quantitative", "title": "Weekday entries", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-top-stations",
+    "title": "Busiest train stations",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 360,
+      "data": {"url": "../data/top_20_train_stations_2024_25.csv"},
+      "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#2364aa"},
+      "encoding": {
+        "y": {"field": "station", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "annual_entries", "type": "quantitative", "title": "Annual entries", "axis": {"format": "~s"}},
+        "tooltip": [
+          {"field": "station", "type": "nominal"},
+          {"field": "annual_entries", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-timeband",
+    "title": "Peak-period shape at major stations",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 360,
+      "data": {"url": "../data/top_station_time_bands.csv"},
+      "mark": {"type": "bar"},
+      "encoding": {
+        "y": {"field": "station", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "entries", "type": "quantitative", "title": "Average entries", "stack": "normalize", "axis": {"format": ".0%"}},
+        "color": {"field": "time_band", "type": "nominal", "title": "Time band"},
+        "tooltip": [
+          {"field": "station", "type": "nominal"},
+          {"field": "time_band", "type": "nominal"},
+          {"field": "entries", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-station-scatter",
+    "title": "Weekday versus weekend station use",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/metro_station_patronage_2024_25.csv"},
+      "mark": {"type": "circle", "opacity": 0.62, "color": "#8f4aa8"},
+      "encoding": {
+        "x": {"field": "weekday", "type": "quantitative", "title": "Average weekday entries", "axis": {"format": "~s"}},
+        "y": {"field": "saturday", "type": "quantitative", "title": "Average Saturday entries", "axis": {"format": "~s"}},
+        "size": {"field": "annual_entries", "type": "quantitative", "legend": null, "scale": {"range": [20, 900]}},
+        "tooltip": [
+          {"field": "station", "type": "nominal"},
+          {"field": "weekday", "type": "quantitative", "format": ","},
+          {"field": "saturday", "type": "quantitative", "format": ","},
+          {"field": "annual_entries", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  },
+  {
+    "id": "chart-weekend-share",
+    "title": "Weekend reliance among busy stations",
+    "spec": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 245,
+      "data": {"url": "../data/top_20_train_stations_2024_25.csv"},
+      "transform": [
+        {"calculate": "(datum.saturday + datum.sunday) / (datum.weekday * 2)", "as": "weekend_share"}
+      ],
+      "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#d76735"},
+      "encoding": {
+        "y": {"field": "station", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "weekend_share", "type": "quantitative", "title": "Weekend intensity", "axis": {"format": ".0%"}},
+        "tooltip": [
+          {"field": "station", "type": "nominal"},
+          {"field": "weekend_share", "type": "quantitative", "format": ".1%"},
+          {"field": "saturday", "type": "quantitative", "format": ","},
+          {"field": "sunday", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  }
+]
